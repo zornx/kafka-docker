@@ -9,8 +9,8 @@ https://github.com/confluentinc/cp-docker-images
 ## Requirements
 - docker
 - docker-compose
-- openssl
-- keytool
+- openssl (Only for SSL Example)
+- keytool (Only for SSL Example)
 
 ## Contents
 | Example | Description | SSL Example |
