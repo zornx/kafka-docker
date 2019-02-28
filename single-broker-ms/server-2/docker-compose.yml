@@ -1,0 +1,31 @@
+---
+#======================
+#== Confluent System ==
+#======================
+version: '2'
+services:
+  ksql-server:
+    image: confluentinc/cp-ksql-server
+    hostname: ksql-server
+    container_name: ksql-server
+    ports:
+      - "8088:8088"
+    environment:
+      KSQL_HOST_NAME: ksql-server
+      KSQL_CONFIG_DIR: "/etc/ksql"
+      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
+      KSQL_BOOTSTRAP_SERVERS: 192.168.120.3:9092
+      KSQL_LISTENERS: "http://0.0.0.0:8088"
+
+  rest-proxy:
+    image: confluentinc/cp-kafka-rest
+    hostname: rest-proxy
+    container_name: rest-proxy
+    ports:
+      - 8082:8082
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      #KAFKA_REST_ZOOKEEPER_CONNECT: 192.168.120.3:2181
+      KAFKA_REST_BOOTSTRAP_SERVERS: 192.168.120.3:9092
+      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+
