@@ -16,5 +16,5 @@ $ docker-compose up --build
 ```
 Check SSL connection:
 ```sh
-$ openssl s_client -debug -connect localhost:9092 -tls1
+$ openssl s_client -debug -connect localhost:9092 -tls1_2
 ```
