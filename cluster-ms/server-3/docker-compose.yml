@@ -1,30 +1,34 @@
 ---
-#==============================
-#== Confluent System Cluster ==
-#==============================
+#======================
+#==== Kafka Node 3 ====
+#======================
 version: '2'
 services:
-  ksql-server:
-    image: confluentinc/cp-ksql-server
-    hostname: ksql-server
-    container_name: ksql-server
+  zookeeper-3:
+    image: confluentinc/cp-zookeeper
+    hostname: zookeeper-3
+    container_name: zookeeper-3
     ports:
-      - "8088:8088"
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
     environment:
-      KSQL_HOST_NAME: ksql-server
-      KSQL_CONFIG_DIR: "/etc/ksql"
-      KSQL_LOG4J_OPTS: "-Dlog4j.configuration=file:/etc/ksql/log4j-rolling.properties"
-      KSQL_BOOTSTRAP_SERVERS: 192.168.120.3:9092,192.168.139.3:9092
-      KSQL_LISTENERS: "http://0.0.0.0:8088"
+      ZOOKEEPER_SERVER_ID: 3
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: 192.168.120.3:2888:3888;192.168.139.3:2888:3888;0.0.0.0:2888:3888
 
-  rest-proxy:
-    image: confluentinc/cp-kafka-rest
-    hostname: rest-proxy
-    container_name: rest-proxy
+  kafka-3:
+    image: confluentinc/cp-kafka
+    hostname: kafka-3
+    container_name: kafka-3
     ports:
-      - 8082:8082
+      - "9092:9092"
+    depends_on:
+      - zookeeper-3
     environment:
-      KAFKA_REST_HOST_NAME: rest-proxy
-      #KAFKA_REST_ZOOKEEPER_CONNECT: 192.168.120.3:2181,192.168.139.3:2181
-      KAFKA_REST_BOOTSTRAP_SERVERS: 192.168.120.3:9092,192.168.139.3:9092
-      KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: 192.168.120.3:2181,192.168.139.3:2181,0.0.0.0:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.211.3:9092
