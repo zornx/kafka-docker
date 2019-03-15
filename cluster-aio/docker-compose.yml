@@ -63,6 +63,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:19092
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
  
   kafka-2:
     image: confluentinc/cp-kafka
@@ -78,6 +80,8 @@ services:
       KAFKA_BROKER_ID: 2
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:29092
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
  
   kafka-3:
     image: confluentinc/cp-kafka
@@ -93,6 +97,8 @@ services:
       KAFKA_BROKER_ID: 3
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:12181,zookeeper-2:22181,zookeeper-3:32181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-3:39092
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
 
   ksql-server:
     image: confluentinc/cp-ksql-server
